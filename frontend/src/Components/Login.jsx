@@ -3,7 +3,7 @@ import sign from "../assets/signup.jpg";
 import { EmailContext } from "../Components/Context";
 import { useContext, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import {
   MdEmail,
@@ -12,15 +12,15 @@ import {
   MdVisibilityOff,
   MdArrowForward,
 } from "react-icons/md";
-import store from "./store/store";
 
 const Login = () => {
   const [password, setPassword] = useState("");
   const { email, setEmail } = useContext(EmailContext);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const text = useSelector((store)=>store.text.value);
+  const text = useSelector((store) => store.text.value);
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -31,33 +31,38 @@ const Login = () => {
         email,
         password,
       });
+
       toast.success(response.data.message);
       const { token, user } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("role", user.role);
       localStorage.setItem("userName", user.fname);
       localStorage.setItem("userId", user.id);
+console.log(response);
+
       if (user.role === "employer") {
         navigate("/RecuterDashboard/CreateJob");
       } else {
         navigate("/dash");
       }
     } catch (err) {
-      setLoading(false);
+      console.log(err);
+      
       if (err.response && err.response.data) {
         toast.error(err.response.data.message);
+      } else if (err.request) {
+        toast.error("Network error. Please check your connection.");
       } else {
-        toast.error("Something went wrong. Please try again later.");
+        toast.error("An unexpected error occurred. Please try again.");
       }
+    } finally {
+      setLoading(false);
     }
   };
-  
 
   return (
     <div className="flex min-h-screen bg-gray-900 md:pt-20 text-gray-100">
       <ToastContainer />
-
-      {/* Left Side - Image */}
 
       <div className="hidden lg:flex w-1/2 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/80 to-purple-600/80 z-10"></div>
@@ -74,17 +79,14 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Right Side - Form */}
       <div className="flex justify-center items-center w-full lg:w-1/2 p-8">
         <div className="w-full max-w-md">
           <h1 className="text-3xl font-bold">Thank You To Login {text}</h1>
           <div className="mb-10">
-            {/* <h2 className="text-3xl font-bold mb-2 text-white">Login</h2> */}
             <p className="text-gray-400">Please sign in to continue</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Field */}
             <div className="relative">
               <label
                 htmlFor="email"
@@ -106,7 +108,6 @@ const Login = () => {
               </div>
             </div>
 
-            {/* Password Field */}
             <div className="relative">
               <label
                 htmlFor="password"
@@ -139,7 +140,6 @@ const Login = () => {
               </div>
             </div>
 
-            {/* Remember Me & Forgot Password */}
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center">
                 <input
@@ -161,10 +161,8 @@ const Login = () => {
                 Forgot password?
               </Link>
             </div>
-           
 
-            {/* Login Button */}
-            <button 
+            <button
               type="submit"
               disabled={loading}
               className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-lg hover:shadow-blue-500/25"
@@ -174,7 +172,6 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Divider */}
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-700"></div>
@@ -184,7 +181,6 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Sign Up Link */}
           <div className="text-center">
             <p className="text-gray-400">
               Don't have an account?{" "}

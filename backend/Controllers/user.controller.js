@@ -128,49 +128,51 @@ export const resetPassword = async (req, res) => {
   });
 };
 
+// const jwt = require('jsonwebtoken');
+// const bcrypt = require('bcrypt');
+
 export const userSigninController = async (req, res, next) => {
   const { email, password } = req.body;
 
-  // Check if the email and password are provided
-  if (!email || !password) {
-    throw new customError(400, "Email and password are required");
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid password" });
+    }
+
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.status(200).json({
+      message: "Signin successful",
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        fname: user.fname,
+        lname: user.lname,
+        phone: user.phone,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error("Error during signin:", error); // Log the error
+    res.status(500).json({ message: "Internal server error" });
   }
-
-  // Find user by email
-  const user = await User.findOne({ email });
-
-  if (!user) {
-    throw new customError(404, "User not found");
-  }
-
-  // Compare the password with the stored hashed password
-  const isMatch = await bcrypt.compare(password, user.password);
-
-  if (!isMatch) {
-    res.status(401).json({ message: "Invalid password" });
-    throw new customError(400, "Incorrect password");
-  }
-
-  // Generate a JWT token (user's ID and email are in the payload)
-  const token = jwt.sign(
-    { userId: user._id, email: user.email },
-    process.env.JWT_SECRET, // Your JWT secret, should be stored in an env variable
-    { expiresIn: "1h" } // Token expires in 1 hour (adjustable)
-  );
-
-  // Return the token and user info
-  res.status(200).json({
-    message: "Signin successful",
-    token, // JWT token
-    user: {
-      id: user._id,
-      email: user.email,
-      fname: user.fname, 
-      lname: user.lname,
-      phone: user.phone,
-      role: user.role,
-    },
-  });
 };
 
 //file upload controller

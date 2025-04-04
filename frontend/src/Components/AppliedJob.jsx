@@ -97,8 +97,8 @@ const AppliedJob = () => {
                   <h4 className="text-xl font-bold text-gray-900">
                     {job.position || "Unknown Position"}
                   </h4>
-                  <p className="text-gray-600">
-                    ${job.salary ? job.salary.toLocaleString() : "N/A"}
+                  <p className="text-gray-400">
+                  ₹{job.salary ? job.salary.toLocaleString() : "N/A"}
                   </p>
                   <p className="text-gray-500 flex items-center gap-1">
                     <MapPin size={16} /> {job.location || "Unknown Location"}
