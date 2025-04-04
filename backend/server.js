@@ -20,7 +20,7 @@ const app = express();
 })();
 
 app.use(cors({
-  origin: 'https://frontend-jobportal.onrender.com',
+  origin: 'https://backend-jobportal.onrender.com',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
 }));
