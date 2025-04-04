@@ -25,7 +25,7 @@ const Employer = () => {
   const fetchJobs = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/api/jobs");
+      const response = await fetch("https://backend-jobport.onrender.com/api/jobs");
       const data = await response.json();
       setJobs(data.jobs || []);
     } catch (err) {
@@ -42,7 +42,7 @@ const Employer = () => {
         throw new Error("Invalid job ID format");
       }
 
-      const response = await fetch(`http://localhost:3000/api/createdjobs/${jobId}`, {
+      const response = await fetch(`https://backend-jobport.onrender.com/api/createdjobs/${jobId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -104,7 +104,7 @@ const Employer = () => {
         throw new Error("No job selected for editing");
       }
 
-      const response = await fetch(`http://localhost:3000/api/update/jobs/${selectedJob._id}`, {
+      const response = await fetch(`https://backend-jobport.onrender.com/api/update/jobs/${selectedJob._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

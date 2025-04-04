@@ -19,7 +19,7 @@ const AppliedJob = () => {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:3000/api/user/${userId}/applied-jobs`);
+      const response = await axios.get(`https://backend-jobport.onrender.com/api/user/${userId}/applied-jobs`);
       console.log("Applied jobs response:", response.data);
       setAppliedJobs(response.data.appliedJobs || []);
     } catch (error) {
@@ -56,7 +56,7 @@ const AppliedJob = () => {
     }
 
     try {
-        const response = await axios.delete(`http://localhost:3000/api/applied-jobs/${jobId}`, {
+        const response = await axios.delete(`https://backend-jobport.onrender.com/api/applied-jobs/${jobId}`, {
             data: { userId }, // Ensure userId is correctly passed
         });
 

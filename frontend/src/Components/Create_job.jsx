@@ -36,7 +36,7 @@ const CreateJob = () => {
     try {
       const skillsArray = formData.skills ? formData.skills.split(',').map(skill => skill.trim()) : [];
       const jobData = { ...formData, skills: skillsArray };
-      const response = await axios.post('http://localhost:3000/api/createJob', jobData);
+      const response = await axios.post('https://backend-jobport.onrender.com/api/createJob', jobData);
       
       setMessage(response.data.message);
       setFormData({

@@ -65,7 +65,7 @@ const CompanyProfile = () => {
 
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:3000/api/profile/${userId}`);
+        const response = await axios.get(`https://backend-jobport.onrender.com/api/profile/${userId}`);
         const data = response.data.user || response.data;
 
         if (!data) throw new Error("No company data found in response");

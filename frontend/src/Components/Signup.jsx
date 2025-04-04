@@ -122,7 +122,7 @@ const SignupPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/signup",
+        "https://backend-jobport.onrender.com/api/signup",
         formData
       );
       navigate('/signin')

@@ -17,7 +17,7 @@ const EditProfile = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/profile/${userId}`
+          `https://backend-jobport.onrender.com/api/profile/${userId}`
         );
         setUserData(response.data);
       } catch (error) {
@@ -35,7 +35,7 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/api/profile/${userId}`, userData);
+      await axios.put(`https://backend-jobport.onrender.com/api/profile/${userId}`, userData);
       alert("Profile updated successfully!");
       navigate("/profile");
     } catch (error) {

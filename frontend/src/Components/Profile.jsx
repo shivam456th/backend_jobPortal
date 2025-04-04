@@ -189,7 +189,7 @@ const Profile = () => {
       const formData = new FormData();
       formData.append("resume", resumeFile);
 
-      const response = await axios.put(`http://localhost:3000/api/uploadResume/${userId}`, formData, {
+      const response = await axios.put(`https://backend-jobport.onrender.com/api/uploadResume/${userId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -229,7 +229,7 @@ const Profile = () => {
         formData.append("profileImage", newProfileImage.file);
       }
 
-      const response = await axios.put(`http://localhost:3000/api/profile/${userId}`, formData, {
+      const response = await axios.put(`https://backend-jobport.onrender.com/api/profile/${userId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,

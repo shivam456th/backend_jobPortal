@@ -38,7 +38,7 @@ const JobBoard = () => {
   const fetchJobs = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:3000/api/jobs");
+      const response = await axios.get("https://backend-jobport.onrender.com/api/jobs");
       setJobs(response.data.jobs || []);
     } catch (error) {
       showToast("Failed to load jobs. Please ensure the server is running.");
@@ -54,7 +54,7 @@ const JobBoard = () => {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:3000/api/user/${userId}/applied-jobs`);
+      const response = await axios.get(`https://backend-jobport.onrender.com/api/user/${userId}/applied-jobs`);
       setAppliedJobs(response.data.appliedJobs || []);
     } catch (error) {
       showToast("Could not load your applied jobs. Please try again later.");
@@ -75,7 +75,7 @@ const JobBoard = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post("http://localhost:3000/api/apply", {
+      const response = await axios.post("https://backend-jobport.onrender.com/api/apply", {
         jobId: job._id,
         userId: userId,
       });
@@ -106,7 +106,7 @@ const JobBoard = () => {
 
   const fetchUserName = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/profile/${userId}`, {
+      const response = await axios.get(`https://backend-jobport.onrender.com/api/profile/${userId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming you have a token
         },
