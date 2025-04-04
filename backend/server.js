@@ -20,10 +20,11 @@ const app = express();
 })();
 
 app.use(cors({
-  origin:'https://backend-jobport.onrender.com',
-  credentials:true,
-  methods:['GET','POST','PUT','DELETE','PATCH']
+  origin: 'https://frontend-jobportal.onrender.com',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
 }));
+
 app.use(cookieParser());
 app.use(express.json({ extended: true, limit: "100kb" }));
 app.use(express.urlencoded({ extended: true, limit: "100kb" }));
